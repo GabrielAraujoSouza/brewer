@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.algaworks.brewer.model.Estilo;
 import com.algaworks.brewer.service.CadastroEstiloService;
+import com.algaworks.brewer.service.exception.NomeEstiloJaCadastradoException;
 
 @Controller
 public class EstilosController {
@@ -22,9 +23,7 @@ public class EstilosController {
 	
 	@RequestMapping("/estilos/novo")
 	public ModelAndView novo(Estilo estilo){
-		ModelAndView mv = new ModelAndView("estilo/CadastroEstilo");
-		mv.addObject("estilo", estilo);
-		return mv;
+		return new ModelAndView("estilo/CadastroEstilo");
 	}
 	
 	@RequestMapping(value = "/estilos/novo", method = RequestMethod.POST)
@@ -32,7 +31,12 @@ public class EstilosController {
 		if(result.hasErrors()){
 			return novo(estilo);
 		}
-		cadastroEstiloService.salvar(estilo);
+		try{
+			cadastroEstiloService.salvar(estilo);
+		} catch(NomeEstiloJaCadastradoException e){
+			result.rejectValue("nome", e.getMessage(), e.getMessage());
+			return novo(estilo);
+		}
 		attributes.addFlashAttribute("mensagem", "Estilo salvo com sucesso!");
 		return new ModelAndView("redirect:/estilos/novo");
 	}
