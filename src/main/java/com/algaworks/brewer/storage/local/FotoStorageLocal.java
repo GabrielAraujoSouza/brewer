@@ -51,7 +51,7 @@ public class FotoStorageLocal implements FotoStorage{
 		try {
 			return Files.readAllBytes(this.localTemporario.resolve(nome));
 		} catch (IOException e) {
-			throw new RuntimeException("Erro lendo a foto temporária, e");
+			throw new RuntimeException("Erro lendo a foto temporária", e);
 		}
 	}
 	
