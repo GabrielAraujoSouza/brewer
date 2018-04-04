@@ -36,4 +36,9 @@ public class FotosController {
 		return fotoStorage.recuperarFotoTemporaria(nome);
 	}
 	
+	@GetMapping("/{nome:.*}")
+	public byte[] recurperar(@PathVariable String nome){
+		return fotoStorage.recuperar(nome);
+	}
+	
 }
