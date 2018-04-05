@@ -2,7 +2,7 @@
 <html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymleaf/layout"
-	layout:decorate="layout/LayoutPadrao"
+	layout:decorate="~{layout/LayoutPadrao}"
 	xmlns:data="http://www.thymeleaf.org/extras/data">
 	
 <head>
@@ -96,9 +96,14 @@
 					
 					<div class="col-sm-4  form-group  bw-required">
 						<label for="cidade" class="control-label">Cidade</label>
-						<select id="cidade" class="form-control">
-							<option value="">Selecione a cidade</option>
-						</select>
+						<div class="bw-field-action">
+							<select id="cidade" class="form-control" data:url="@{/cidades}">
+							</select>
+							
+							<div class="bw-field-action__icon  js-img-loading" style="display: none">
+								<img th:src="@{/images/mini-loading.gif}"/>
+							</div>
+						</div>
 					</div>
 				</div>
 			
@@ -111,6 +116,7 @@
 	</section>
 <th:block layout:fragment="javascript-extra">
 	<script th:src="@{/javascripts/cliente.mascara-cpf-cnpj.js}"></script>
+	<script th:src="@{/javascripts/cliente.combo-estado-cidade.js}"></script>
 </th:block>
 </body>
 </html>
