@@ -29,7 +29,7 @@ public class Cliente implements Serializable{
 	@NotBlank(message = "Nome é obrigatório")
 	private String nome;
 	
-	@NotNull
+	@NotNull(message = "Tipo pessoa é obrigatório")
 	@Enumerated(EnumType.STRING)
 	@Column(name = "tipo_pessoa")
 	private TipoPessoa tipoPessoa;
