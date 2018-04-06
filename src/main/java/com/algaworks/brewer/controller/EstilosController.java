@@ -72,7 +72,7 @@ public class EstilosController {
 		ModelAndView mv = new ModelAndView("estilo/PesquisaEstilos");
 
 		PageWrapper<Estilo> pagina = new PageWrapper<>(estilos.filtrar(estiloFilter, pageable), httpServletRequest);
-		System.out.println(">>> "+pagina.getTotal());
+
 		mv.addObject("pagina", pagina);
 		return mv;
 	}
