@@ -2,8 +2,12 @@ package com.algaworks.brewer.config;
 
 import java.math.BigDecimal;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.BeansException;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.caffeine.CaffeineCacheManager;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
@@ -32,6 +36,7 @@ import com.algaworks.brewer.controller.converter.CidadeConverter;
 import com.algaworks.brewer.controller.converter.EstadoConverter;
 import com.algaworks.brewer.controller.converter.EstiloConverter;
 import com.algaworks.brewer.thymeleaf.BrewerDialect;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.mxab.thymeleaf.extras.dataattribute.dialect.DataAttributeDialect;
 
 import nz.net.ultraq.thymeleaf.LayoutDialect;
@@ -40,6 +45,7 @@ import nz.net.ultraq.thymeleaf.LayoutDialect;
 @ComponentScan(basePackageClasses = {CervejasController.class})
 @EnableWebMvc
 @EnableSpringDataWebSupport
+@EnableCaching
 public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationContextAware{
 
 	private ApplicationContext applicationContext;
@@ -102,6 +108,28 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
 	@Bean
 	public LocaleResolver localeResolver(){
 		return new FixedLocaleResolver(new Locale("pt", "BR"));
+	}
+	
+	@Bean
+	public CacheManager cacheManager(){
+		Caffeine<Object, Object> cacheBuilder = Caffeine.newBuilder()
+				.maximumSize(3)
+				.expireAfterAccess(20, TimeUnit.SECONDS);
+		
+		CaffeineCacheManager cacheManager = new CaffeineCacheManager();
+		cacheManager.setCaffeine(cacheBuilder);
+			
+		return cacheManager;
+		
+		/* Não funciona nessa versão do Spring
+		 * 
+		 CacheBuilder<Object, Object> cacheBuilder = CacheBuilder.newBuilder()
+		.maximumSize(3)
+		.expireAfterAccess(30, TimeUnit.SECONDS);
+
+		GuavaCacheManage cacheManager = new GuavaCacheManager();
+		cacheManager.setCacheBuilder(cacheBuilder);
+		return cacheManager;*/
 	}
 
 }

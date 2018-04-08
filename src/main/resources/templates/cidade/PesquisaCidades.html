@@ -36,7 +36,7 @@
 				<div class="col-sm-4  form-group">
 					<label for="estado" class="control-label">Estado</label> 
 					<select id="estado" class="form-control" th:field="*{estado}">
-						<option value="">Selecione o estado</option>
+						<option value="">Todos</option>
 						<option th:each="estado : ${estados}" th:value="${estado.codigo}" th:text="${estado.nome}">São Paulo</option>
 					</select>
 				</div>
@@ -60,7 +60,7 @@
 						<th class="table-cidades-col-estado">
 							<brewer:order page="${pagina}" field="estado" text="Estado"/>
 						</th>
-						<th class="table-cervejas-col-acoes"></th>
+						<th class="table-col-acoes"></th>
 					</tr>
 				</thead>
 				
@@ -78,7 +78,7 @@
 						</td>
 					</tr>
 					<tr th:if="${pagina.vazia}">
-						<td colspan="7">Nenhuma cidade encontrada</td>
+						<td colspan="3">Nenhuma cidade encontrada</td>
 					</tr>
 				</tbody>
 			</table>
