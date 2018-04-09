@@ -7,7 +7,7 @@
 			driverClass="com.mysql.jdbc.Driver"
 			jdbcUrl="jdbc:mysql://localhost/brewer?userSSL=false"
 			user="root"
-			password="bender"
+			password="root"
 			initialPoolSize="5"
 			minPoolSize="5"
 			maxPoolSize="5"
