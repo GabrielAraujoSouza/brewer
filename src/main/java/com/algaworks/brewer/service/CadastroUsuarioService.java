@@ -42,11 +42,7 @@ public class CadastroUsuarioService {
 	}
 
 	@Transactional
-	public void alterarStatus(Long[] codigos, String status) {
-		if(status.equals("ATIVAR")){
-			usuarios.findByCodigoIn(codigos).forEach(u -> u.setAtivo(true));
-		} else{
-			usuarios.findByCodigoIn(codigos).forEach(u -> u.setAtivo(false));
-		}
+	public void alterarStatus(Long[] codigos, StatusUsuario statusUsuario) {
+		statusUsuario.executar(codigos, usuarios);
 	}
 }
